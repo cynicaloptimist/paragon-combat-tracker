@@ -1,18 +1,20 @@
+import { ReactElement } from "react";
+
 export type Combatant<TCharacter> = {
   character: TCharacter;
   initiativeResult: string;
 };
 
-export type Plugin<TCharacter, TStatBlock> = {
+export type RulesPlugin<TCharacter, TStatBlock> = {
   loadCharacter: (inputString: string) => TCharacter;
   loadStatBlock: (inputString: string) => TStatBlock;
   initializeCharacter: (statBlock: TStatBlock) => TCharacter;
-  renderInitiativeRow: (combatant: Combatant<TCharacter>) => HTMLElement;
-  renderSmallView: (combatant: Combatant<TCharacter>) => HTMLElement;
-  renderFullView: (combatant: Combatant<TCharacter>) => HTMLElement;
+  renderInitiativeRow: (combatant: Combatant<TCharacter>) => ReactElement;
+  renderSmallView: (combatant: Combatant<TCharacter>) => ReactElement;
+  renderFullView: (combatant: Combatant<TCharacter>) => ReactElement;
   getInitiativeResult: (combatant: Combatant<TCharacter>) => string;
 };
 
 export function RegisterPlugin<TCharacter, TStatBlock>(
-  plugin: Plugin<TCharacter, TStatBlock>
+  plugin: RulesPlugin<TCharacter, TStatBlock>
 ) {}
