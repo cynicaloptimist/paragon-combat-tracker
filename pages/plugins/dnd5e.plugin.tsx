@@ -6,11 +6,13 @@ export type DnD5eCharacter = {
 
 export type DnD5eStatBlock = {
   InitiativeModifier: number;
+  Name: string;
 };
 
 function DefaultStatBlock(): DnD5eStatBlock {
   return {
     InitiativeModifier: 0,
+    Name: "Default StatBlock",
   };
 }
 
