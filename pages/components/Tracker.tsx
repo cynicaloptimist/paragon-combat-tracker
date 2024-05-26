@@ -14,5 +14,10 @@ export function Tracker<TCharacter, TStatBlock>(
     character,
     initiativeResult: "0",
   };
-  return <div>{rulesPlugin.renderInitiativeRow(combatant)}</div>;
+  return (
+    <div>
+      <div>{rulesPlugin.renderInitiativeRow(combatant)}</div>
+      <div>{rulesPlugin.renderInitiativeRow(combatant)}</div>
+    </div>
+  );
 }
