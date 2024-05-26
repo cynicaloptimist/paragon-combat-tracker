@@ -2,17 +2,20 @@ import { RulesPlugin } from "../../RegisterPlugin";
 
 export type DnD5eCharacter = {
   statBlock: DnD5eStatBlock;
+  currentHP: number;
 };
 
 export type DnD5eStatBlock = {
-  InitiativeModifier: number;
-  Name: string;
+  initiativeModifier: number;
+  name: string;
+  maxHP: number;
 };
 
 function DefaultStatBlock(): DnD5eStatBlock {
   return {
-    InitiativeModifier: 0,
-    Name: "Default StatBlock",
+    initiativeModifier: 0,
+    name: "Default StatBlock",
+    maxHP: 1,
   };
 }
 
@@ -23,14 +26,16 @@ export const dnd5e: RulesPlugin<DnD5eCharacter, DnD5eStatBlock> = {
   loadCharacter(inputString) {
     return {
       statBlock: DefaultStatBlock(),
+      currentHP: DefaultStatBlock().maxHP,
     };
   },
   getInitiativeResult(combatant) {
-    return combatant.character.statBlock.InitiativeModifier.toString();
+    return combatant.character.statBlock.initiativeModifier.toString();
   },
   initializeCharacter(statBlock) {
     return {
       statBlock,
+      currentHP: statBlock.maxHP,
     };
   },
   renderFullView(combatant) {
@@ -40,6 +45,12 @@ export const dnd5e: RulesPlugin<DnD5eCharacter, DnD5eStatBlock> = {
     return <div>{JSON.stringify(combatant)}</div>;
   },
   renderInitiativeRow(combatant) {
-    return <div>{JSON.stringify(combatant)}</div>;
+    const { character } = combatant;
+    const { statBlock } = character;
+    return (
+      <div>
+        {statBlock.name} {character.currentHP}/{statBlock.maxHP}
+      </div>
+    );
   },
 };
