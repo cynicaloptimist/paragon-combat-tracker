@@ -1,3 +1,4 @@
+import { PropsWithChildren } from "react";
 import { Combatant, RulesPlugin } from "../../RegisterPlugin";
 
 type TrackerProps<TCharacter, TStatBlock> = {
@@ -16,8 +17,19 @@ export function Tracker<TCharacter, TStatBlock>(
   };
   return (
     <div>
-      <div>{rulesPlugin.renderInitiativeRow(combatant)}</div>
-      <div>{rulesPlugin.renderInitiativeRow(combatant)}</div>
+      <Heading>Initiative Order</Heading>
+      <div>
+        <div>{rulesPlugin.renderInitiativeRow(combatant)}</div>
+        <div>{rulesPlugin.renderInitiativeRow(combatant)}</div>
+      </div>
+      <Heading>Full View</Heading>
+      <div>{rulesPlugin.renderFullView(combatant)}</div>
+      <Heading>Small View</Heading>
+      <div>{rulesPlugin.renderSmallView(combatant)}</div>
     </div>
   );
 }
+
+const Heading = ({ children }: PropsWithChildren) => (
+  <h2 className="font-bold text-lg">{children}</h2>
+);
