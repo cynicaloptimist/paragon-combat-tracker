@@ -1,6 +1,5 @@
 import Head from "next/head";
 import { Inter } from "next/font/google";
-import styles from "/styles/Home.module.css";
 import { Tracker } from "./components/Tracker";
 import { dnd5e } from "./plugins/dnd5e.plugin";
 
@@ -15,7 +14,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={styles.main}>
+      <main>
         <Tracker rulesPlugin={dnd5e} />
       </main>
     </>
