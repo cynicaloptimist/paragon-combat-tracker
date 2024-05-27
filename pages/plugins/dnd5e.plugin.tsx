@@ -1,4 +1,4 @@
-import { RulesPlugin } from "../../RegisterPlugin";
+import { RulesPlugin } from "../RegisterPlugin";
 
 export type DnD5eCharacter = {
   statBlock: DnD5eStatBlock;

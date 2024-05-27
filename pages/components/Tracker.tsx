@@ -1,5 +1,5 @@
 import { PropsWithChildren } from "react";
-import { Combatant, RulesPlugin } from "../../RegisterPlugin";
+import { Combatant, RulesPlugin } from "../RegisterPlugin";
 
 type TrackerProps<TCharacter, TStatBlock> = {
   rulesPlugin: RulesPlugin<TCharacter, TStatBlock>;
