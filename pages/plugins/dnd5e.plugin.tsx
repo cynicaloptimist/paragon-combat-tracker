@@ -45,11 +45,16 @@ export const dnd5e: RulesPlugin<DnD5eCharacter, DnD5eStatBlock> = {
     return <div>{JSON.stringify(combatant)}</div>;
   },
   renderInitiativeRow(combatant) {
-    const { character } = combatant;
-    const { statBlock } = character;
+    const { character, initiativeResult } = combatant;
+    const { statBlock, currentHP } = character;
+    const { name, maxHP } = statBlock;
     return (
-      <div>
-        {statBlock.name} {character.currentHP}/{statBlock.maxHP}
+      <div className="flex flex-row gap-2">
+        <div className="font-bold text-right w-6">{initiativeResult}</div>
+        <div>{name}</div>
+        <div>
+          {currentHP}/{maxHP}
+        </div>
       </div>
     );
   },
