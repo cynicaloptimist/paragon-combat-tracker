@@ -1,16 +1,10 @@
-import { PropsWithChildren, Reducer, useReducer } from "react";
+import { PropsWithChildren, useReducer } from "react";
 import { Combatant, RulesPlugin } from "../RegisterPlugin";
-import { CombatState, getDefaultCombatState } from "../CombatState";
+import { getDefaultCombatState } from "../CombatState";
+import { combatStateReducer } from "../combatStateReducer";
 
 type TrackerProps<TCharacter, TStatBlock> = {
   rulesPlugin: RulesPlugin<TCharacter, TStatBlock>;
-};
-
-const combatStateReducer: Reducer<CombatState<any>, any> = (
-  previousState: CombatState<any>,
-  action: any
-) => {
-  return previousState;
 };
 
 export function Tracker<TCharacter, TStatBlock>(
