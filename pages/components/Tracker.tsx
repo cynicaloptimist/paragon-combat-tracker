@@ -1,6 +1,10 @@
 import { PropsWithChildren, useReducer } from "react";
 import { Combatant, RulesPlugin } from "../RegisterPlugin";
-import { getDefaultCombatState, sortCombatantsDefault } from "../CombatState";
+import {
+  getDefaultCombatState,
+  getSortedIdsCombatants,
+  sortCombatantsDefault,
+} from "../CombatState";
 import { combatStateReducer } from "../combatStateReducer";
 
 type TrackerProps<TCharacter, TStatBlock> = {
@@ -11,30 +15,29 @@ export function Tracker<TCharacter, TStatBlock>(
   props: TrackerProps<TCharacter, TStatBlock>
 ) {
   const { rulesPlugin } = props;
-  // const [state, dispatch] = useReducer(
-  //   combatStateReducer,
-  //   getDefaultCombatState(rulesPlugin)
-  // );
-
-  const state = getDefaultCombatState(rulesPlugin);
+  const [state, dispatch] = useReducer(
+    combatStateReducer,
+    getDefaultCombatState(rulesPlugin)
+  );
 
   const activeCombatantId = state.activeCombatantIds[0];
   const activeCombatant = activeCombatantId
     ? state.combatantsById[activeCombatantId]
     : null;
 
-  const sortedCombatants = Object.entries(state.combatantsById).sort(
-    ([_k1, combatant1], [_k2, combatant2]) =>
-      sortCombatantsDefault(combatant1, combatant2)
-  );
-
   return (
     <div>
       <Heading>Initiative Order</Heading>
       <div>
-        {sortedCombatants.map(([key, combatant]) => {
+        {state.initiativeOrderCombatantIds.map((combatantId) => {
+          const combatant = state.combatantsById[combatantId];
+          if (!combatant) {
+            return <div key={combatantId}>Combatant {combatantId} missing</div>;
+          }
           return (
-            <div key={key}>{rulesPlugin.renderInitiativeRow(combatant)}</div>
+            <div key={combatantId}>
+              {rulesPlugin.renderInitiativeRow(combatant)}
+            </div>
           );
         })}
       </div>

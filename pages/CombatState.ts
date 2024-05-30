@@ -15,15 +15,19 @@ function generateId(): string {
 }
 
 export type CombatState<TCharacter> = {
+  combatantsById: Record<string, Combatant<TCharacter> | undefined>;
   activeCombatantIds: string[];
-  combatantsById: Record<string, Combatant<TCharacter>>;
+  initiativeOrderCombatantIds: string[];
 };
 
-const makeDefaultCombatant = (rulesPlugin: RulesPlugin<any, any>) => {
+const makeDefaultCombatant = (
+  rulesPlugin: RulesPlugin<any, any>,
+  combatantId: string
+) => {
   const statblock = rulesPlugin.loadStatBlock("");
   const character = rulesPlugin.initializeCharacter(statblock);
   const combatant: Combatant<any> = {
-    id: generateId(),
+    id: combatantId,
     character,
     initiativeResult: "0",
   };
@@ -33,9 +37,9 @@ const makeDefaultCombatant = (rulesPlugin: RulesPlugin<any, any>) => {
 export const getDefaultCombatState: (
   rulesPlugin: RulesPlugin<any, any>
 ) => CombatState<any> = (rulesPlugin) => {
-  const combatant = makeDefaultCombatant(rulesPlugin);
-  const combatant2 = makeDefaultCombatant(rulesPlugin);
-  const combatant3 = makeDefaultCombatant(rulesPlugin);
+  const combatant = makeDefaultCombatant(rulesPlugin, "1");
+  const combatant2 = makeDefaultCombatant(rulesPlugin, "2");
+  const combatant3 = makeDefaultCombatant(rulesPlugin, "3");
   combatant.initiativeResult = "10";
   combatant2.initiativeResult = "4a";
   combatant3.initiativeResult = "5a";
@@ -43,10 +47,13 @@ export const getDefaultCombatState: (
     [combatant, combatant2, combatant3],
     (c) => c.id
   );
-  
+
   return {
-    activeCombatantIds: ["1"],
-    combatantsById: { "1": combatant, "2": combatant2, "3": combatant3 },
+    activeCombatantIds: [combatant.id],
+    combatantsById,
+    initiativeOrderCombatantIds: getSortedIdsCombatants(combatantsById).map(
+      ([combatantId]) => combatantId
+    ),
   };
 };
 
@@ -58,3 +65,12 @@ export const sortCombatantsDefault = (
   const i2 = _.parseInt(c2.initiativeResult);
   return i2 - i1;
 };
+
+export function getSortedIdsCombatants(
+  combatantsById: Record<string, Combatant<any>>
+) {
+  return Object.entries(combatantsById).sort(
+    ([_k1, combatant1], [_k2, combatant2]) =>
+      sortCombatantsDefault(combatant1, combatant2)
+  );
+}
