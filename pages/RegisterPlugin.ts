@@ -1,6 +1,7 @@
 import { ReactElement } from "react";
 
 export type Combatant<TCharacter> = {
+  id: string;
   character: TCharacter;
   initiativeResult: string;
 };
