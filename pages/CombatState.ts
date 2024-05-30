@@ -15,7 +15,7 @@ function generateId(): string {
 }
 
 export type CombatState<TCharacter> = {
-  combatantsById: Record<string, Combatant<TCharacter> | undefined>;
+  combatantsById: Record<string, Combatant<TCharacter>>;
   activeCombatantIds: string[];
   initiativeOrderCombatantIds: string[];
 };
