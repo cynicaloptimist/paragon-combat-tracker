@@ -1,11 +1,6 @@
 import { PropsWithChildren, useReducer } from "react";
-import { Combatant, RulesPlugin } from "../RegisterPlugin";
-import {
-  getDefaultCombatState,
-  getSortedIdsCombatants,
-  sortCombatantsDefault,
-} from "../CombatState";
-import { combatStateReducer } from "../combatStateReducer";
+import { RulesPlugin } from "../RegisterPlugin";
+import { useCombatStore } from "../useCombatStore";
 
 type TrackerProps<TCharacter, TStatBlock> = {
   rulesPlugin: RulesPlugin<TCharacter, TStatBlock>;
@@ -15,10 +10,8 @@ export function Tracker<TCharacter, TStatBlock>(
   props: TrackerProps<TCharacter, TStatBlock>
 ) {
   const { rulesPlugin } = props;
-  const [state, dispatch] = useReducer(
-    combatStateReducer,
-    getDefaultCombatState(rulesPlugin)
-  );
+
+  const state = useCombatStore((state) => state.combatState);
 
   const activeCombatantId = state.activeCombatantIds[0];
   const activeCombatant = activeCombatantId
