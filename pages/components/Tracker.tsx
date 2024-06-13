@@ -12,6 +12,7 @@ export function Tracker<TCharacter, TStatBlock>(
   const { rulesPlugin } = props;
 
   const state = useCombatStore((state) => state.combatState);
+  const nextTurn = useCombatStore((state) => state.nextTurn);
 
   const activeCombatantId = state.activeCombatantIds[0];
   const activeCombatant = activeCombatantId
@@ -42,6 +43,7 @@ export function Tracker<TCharacter, TStatBlock>(
       <div>
         {activeCombatant && rulesPlugin.renderSmallView(activeCombatant)}
       </div>
+      <button onClick={() => nextTurn()}>Next Turn</button>
     </div>
   );
 }
