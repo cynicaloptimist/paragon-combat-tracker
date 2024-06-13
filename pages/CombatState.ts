@@ -51,7 +51,7 @@ export const getDefaultCombatState: (
   return {
     activeCombatantId: null,
     combatantsById,
-    initiativeOrderCombatantIds: getSortedIdsCombatants(combatantsById).map(
+    initiativeOrderCombatantIds: getInitiativeSortedIdsCombatants(combatantsById).map(
       ([combatantId]) => combatantId
     ),
   };
@@ -66,7 +66,7 @@ export const sortCombatantsDefault = (
   return i2 - i1;
 };
 
-export function getSortedIdsCombatants(
+export function getInitiativeSortedIdsCombatants(
   combatantsById: Record<string, Combatant<any>>
 ) {
   return Object.entries(combatantsById).sort(
