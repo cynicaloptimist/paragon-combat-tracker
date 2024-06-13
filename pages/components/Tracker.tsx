@@ -29,7 +29,14 @@ export function Tracker<TCharacter, TStatBlock>(
             return <div key={combatantId}>Combatant {combatantId} missing</div>;
           }
           return (
-            <div key={combatantId}>
+            <div
+              key={combatantId}
+              className={`border-2 ${
+                activeCombatantId === combatantId
+                  ? "border-black"
+                  : "border-transparent"
+              }`}
+            >
               {rulesPlugin.renderInitiativeRow(combatant)}
             </div>
           );
