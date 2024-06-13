@@ -14,7 +14,7 @@ export function Tracker<TCharacter, TStatBlock>(
   const state = useCombatStore((state) => state.combatState);
   const nextTurn = useCombatStore((state) => state.nextTurn);
 
-  const activeCombatantId = state.activeCombatantIds[0];
+  const activeCombatantId = state.activeCombatantId;
   const activeCombatant = activeCombatantId
     ? state.combatantsById[activeCombatantId]
     : null;

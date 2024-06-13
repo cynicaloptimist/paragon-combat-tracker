@@ -16,7 +16,7 @@ function generateId(): string {
 
 export type CombatState<TCharacter> = {
   combatantsById: Record<string, Combatant<TCharacter>>;
-  activeCombatantIds: string[];
+  activeCombatantId: string | null;
   initiativeOrderCombatantIds: string[];
 };
 
@@ -49,7 +49,7 @@ export const getDefaultCombatState: (
   );
 
   return {
-    activeCombatantIds: [combatant.id],
+    activeCombatantId: null,
     combatantsById,
     initiativeOrderCombatantIds: getSortedIdsCombatants(combatantsById).map(
       ([combatantId]) => combatantId
