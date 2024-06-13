@@ -1,4 +1,4 @@
-import { PropsWithChildren, useReducer } from "react";
+import { ButtonHTMLAttributes, PropsWithChildren, useReducer } from "react";
 import { RulesPlugin } from "../RegisterPlugin";
 import { useCombatStore } from "../useCombatStore";
 
@@ -50,7 +50,7 @@ export function Tracker<TCharacter, TStatBlock>(
       <div>
         {activeCombatant && rulesPlugin.renderSmallView(activeCombatant)}
       </div>
-      <button onClick={() => nextTurn()}>Next Turn</button>
+      <Button onClick={() => nextTurn()}>Next Turn</Button>
     </div>
   );
 }
@@ -58,3 +58,17 @@ export function Tracker<TCharacter, TStatBlock>(
 const Heading = ({ children }: PropsWithChildren) => (
   <h2 className="font-bold text-lg">{children}</h2>
 );
+
+const Button = ({
+  children,
+  ...props
+}: ButtonHTMLAttributes<HTMLButtonElement>) => {
+  return (
+    <button
+      className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 border border-green-700 rounded"
+      {...props}
+    >
+      {children}
+    </button>
+  );
+};
