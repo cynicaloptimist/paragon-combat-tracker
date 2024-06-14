@@ -1,4 +1,4 @@
-import { ButtonHTMLAttributes, PropsWithChildren, useReducer } from "react";
+import { ButtonHTMLAttributes, PropsWithChildren, useState } from "react";
 import { RulesPlugin } from "../RegisterPlugin";
 import { useCombatStore } from "../useCombatStore";
 
@@ -13,6 +13,9 @@ export function Tracker<TCharacter, TStatBlock>(
 
   const state = useCombatStore((state) => state.combatState);
   const nextTurn = useCombatStore((state) => state.nextTurn);
+  const [selectedCombatantId, setSelectedCombatantId] = useState<string | null>(
+    null
+  );
 
   const activeCombatantId = state.activeCombatantId;
   const activeCombatant = activeCombatantId
@@ -32,10 +35,15 @@ export function Tracker<TCharacter, TStatBlock>(
           return (
             <div
               key={combatantId}
-              className={`transition-colors ease-linear duration-300 ${
+              onClick={() => setSelectedCombatantId(combatantId)}
+              className={`transition-colors ease-linear duration-300 border-2 ${
                 activeCombatantId === combatantId
                   ? "bg-gray-400"
                   : "bg-transparent"
+              } ${
+                selectedCombatantId === combatantId
+                  ? "border-green-500"
+                  : "border-transparent"
               }`}
             >
               {rulesPlugin.renderInitiativeRow(combatant)}
