@@ -38,7 +38,7 @@ export function Tracker<TCharacter, TStatBlock>(
               onClick={() => setSelectedCombatantId(combatantId)}
               className={`transition-colors ease-linear duration-300 border-2 ${
                 activeCombatantId === combatantId
-                  ? "bg-gray-400"
+                  ? "bg-gray-400 font-bold"
                   : "bg-transparent"
               } ${
                 selectedCombatantId === combatantId
