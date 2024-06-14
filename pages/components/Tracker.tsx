@@ -21,6 +21,7 @@ export function Tracker<TCharacter, TStatBlock>(
 
   return (
     <div>
+      <Button onClick={() => nextTurn()}>Next Turn</Button>
       <Heading>Initiative Order</Heading>
       <div>
         {state.initiativeOrderCombatantIds.map((combatantId) => {
@@ -31,10 +32,10 @@ export function Tracker<TCharacter, TStatBlock>(
           return (
             <div
               key={combatantId}
-              className={`border-2 ${
+              className={`transition-colors ease-linear duration-300 ${
                 activeCombatantId === combatantId
-                  ? "border-black"
-                  : "border-transparent"
+                  ? "bg-gray-400"
+                  : "bg-transparent"
               }`}
             >
               {rulesPlugin.renderInitiativeRow(combatant)}
@@ -50,7 +51,6 @@ export function Tracker<TCharacter, TStatBlock>(
       <div>
         {activeCombatant && rulesPlugin.renderSmallView(activeCombatant)}
       </div>
-      <Button onClick={() => nextTurn()}>Next Turn</Button>
     </div>
   );
 }
