@@ -38,11 +38,11 @@ export function Tracker<TCharacter, TStatBlock>(
               onClick={() => setSelectedCombatantId(combatantId)}
               className={`transition-colors ease-linear duration-300 border-2 ${
                 activeCombatantId === combatantId
-                  ? "bg-gray-400 font-bold"
+                  ? "bg-primary-200 font-bold"
                   : "bg-transparent"
               } ${
                 selectedCombatantId === combatantId
-                  ? "border-green-500"
+                  ? "border-primary-600"
                   : "border-transparent"
               }`}
             >
@@ -73,7 +73,7 @@ const Button = ({
 }: ButtonHTMLAttributes<HTMLButtonElement>) => {
   return (
     <button
-      className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 border border-green-700 rounded"
+      className="bg-primary-500 hover:bg-primary-600 text-white font-bold py-2 px-4 rounded"
       {...props}
     >
       {children}
