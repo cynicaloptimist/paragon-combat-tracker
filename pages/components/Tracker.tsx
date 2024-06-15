@@ -23,7 +23,7 @@ export function Tracker<TCharacter, TStatBlock>(
     : null;
 
   return (
-    <div>
+    <div className="m-8 gap-2 flex flex-col">
       <Button onClick={() => nextTurn()}>Next Turn</Button>
       <Heading>Initiative Order</Heading>
       <div>
