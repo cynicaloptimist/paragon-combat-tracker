@@ -1,6 +1,6 @@
 import { ButtonHTMLAttributes, PropsWithChildren, useState } from "react";
 import { RulesPlugin } from "../RegisterPlugin";
-import { useCombatStore } from "../useCombatStore";
+import { useCombatStore } from "../state/useCombatStore";
 import { useTranslation } from "next-i18next";
 
 type TrackerProps<TCharacter, TStatBlock> = {

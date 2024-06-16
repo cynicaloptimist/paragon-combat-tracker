@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { Combatant, RulesPlugin } from "./RegisterPlugin";
+import { Combatant, RulesPlugin } from "../RegisterPlugin";
 
 function generateId(): string {
   const characters = "abcdefghijklmnopqrstuvwxyz";

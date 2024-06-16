@@ -1,6 +1,6 @@
 import Head from "next/head";
-import { Tracker } from "./components/Tracker";
-import { dnd5e } from "./plugins/dnd5e.plugin";
+import { Tracker } from "../components/Tracker";
+import { dnd5e } from "../plugins/dnd5e.plugin";
 
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { NextPageContext } from "next";
