@@ -1,10 +1,18 @@
 import Head from "next/head";
-import { Inter } from "next/font/google";
 import { Tracker } from "./components/Tracker";
 import { dnd5e } from "./plugins/dnd5e.plugin";
 
-const inter = Inter({ subsets: ["latin"] });
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { NextPageContext } from "next";
 
+export async function getStaticProps({ locale }: NextPageContext) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale || "en", ["common"])),
+      // Will be passed to the page component as props
+    },
+  };
+}
 export default function Home() {
   return (
     <>

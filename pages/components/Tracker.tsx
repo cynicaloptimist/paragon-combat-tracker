@@ -1,6 +1,7 @@
 import { ButtonHTMLAttributes, PropsWithChildren, useState } from "react";
 import { RulesPlugin } from "../RegisterPlugin";
 import { useCombatStore } from "../useCombatStore";
+import { useTranslation } from "next-i18next";
 
 type TrackerProps<TCharacter, TStatBlock> = {
   rulesPlugin: RulesPlugin<TCharacter, TStatBlock>;
@@ -10,6 +11,8 @@ export function Tracker<TCharacter, TStatBlock>(
   props: TrackerProps<TCharacter, TStatBlock>
 ) {
   const { rulesPlugin } = props;
+
+  const { t } = useTranslation("common");
 
   const state = useCombatStore((state) => state.combatState);
   const nextTurn = useCombatStore((state) => state.nextTurn);
@@ -25,7 +28,7 @@ export function Tracker<TCharacter, TStatBlock>(
   return (
     <div className="m-8 gap-2 flex flex-col">
       <Button onClick={() => nextTurn()}>Next Turn</Button>
-      <Heading>Initiative Order</Heading>
+      <Heading>{t("tracker.initiative-order")}</Heading>
       <div>
         {state.initiativeOrderCombatantIds.map((combatantId) => {
           const combatant = state.combatantsById[combatantId];
