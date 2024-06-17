@@ -1,5 +1,8 @@
 {
   "tracker": {
     "initiative-order": "Initiative Order"
+  },
+  "commands": {
+    "next-turn": "Next Turn"
   }
 }

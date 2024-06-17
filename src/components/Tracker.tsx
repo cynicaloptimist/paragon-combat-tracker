@@ -27,7 +27,7 @@ export function Tracker<TCharacter, TStatBlock>(
 
   return (
     <div className="m-8 gap-2 flex flex-col">
-      <Button onClick={() => nextTurn()}>Next Turn</Button>
+      <Button onClick={() => nextTurn()}>{t("commands.next-turn")}</Button>
       <Heading>{t("tracker.initiative-order")}</Heading>
       <div>
         {state.initiativeOrderCombatantIds.map((combatantId) => {
