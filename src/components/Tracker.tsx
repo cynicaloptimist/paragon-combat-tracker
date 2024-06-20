@@ -21,9 +21,6 @@ export function Tracker<TCharacter, TStatBlock>(
   );
 
   const activeCombatantId = state.activeCombatantId;
-  const activeCombatant = activeCombatantId
-    ? state.combatantsById[activeCombatantId]
-    : null;
 
   return (
     <div className="m-8 gap-2 flex flex-col">
@@ -54,17 +51,51 @@ export function Tracker<TCharacter, TStatBlock>(
           );
         })}
       </div>
-      <Heading>Full View</Heading>
-      <div>
-        {activeCombatant && rulesPlugin.renderFullView(activeCombatant)}
-      </div>
-      <Heading>Small View</Heading>
-      <div>
-        {activeCombatant && rulesPlugin.renderSmallView(activeCombatant)}
-      </div>
+      <CombatantDisplay
+        activeCombatantId={activeCombatantId}
+        selectedCombatantId={selectedCombatantId}
+        rulesPlugin={rulesPlugin}
+      />
     </div>
   );
 }
+
+const CombatantDisplay = (props: {
+  activeCombatantId: string | null;
+  selectedCombatantId: string | null;
+  rulesPlugin: RulesPlugin<any, any>;
+}) => {
+  const state = useCombatStore((state) => state.combatState);
+  const { t } = useTranslation("common");
+
+  const activeCombatant = props.activeCombatantId
+    ? state.combatantsById[props.activeCombatantId]
+    : null;
+
+  const selectedCombatant = props.selectedCombatantId
+    ? state.combatantsById[props.selectedCombatantId]
+    : null;
+
+  if (selectedCombatant) {
+    return (
+      <div>
+        <Heading>{t("tracker.selected-combatant")}</Heading>
+        {props.rulesPlugin.renderFullView(selectedCombatant)}
+      </div>
+    );
+  }
+
+  if (activeCombatant) {
+    return (
+      <div>
+        <Heading>{t("tracker.active-combatant")}</Heading>
+        {props.rulesPlugin.renderFullView(activeCombatant)}
+      </div>
+    );
+  }
+
+  return null;
+};
 
 const Heading = ({ children }: PropsWithChildren) => (
   <h2 className="font-bold text-lg">{children}</h2>

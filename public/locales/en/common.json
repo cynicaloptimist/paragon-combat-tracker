@@ -1,6 +1,8 @@
 {
   "tracker": {
-    "initiative-order": "Initiative Order"
+    "initiative-order": "Initiative Order",
+    "active-combatant": "Active Combatant",
+    "selected-combatant": "Selected Combatant"
   },
   "commands": {
     "next-turn": "Next Turn"
