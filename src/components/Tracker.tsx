@@ -2,6 +2,8 @@ import { ButtonHTMLAttributes, PropsWithChildren, useState } from "react";
 import { RulesPlugin } from "../RegisterPlugin";
 import { useCombatStore } from "../state/useCombatStore";
 import { useTranslation } from "next-i18next";
+import { Button } from "./Button";
+import { generateId } from "../state/generateId";
 
 type TrackerProps<TCharacter, TStatBlock> = {
   rulesPlugin: RulesPlugin<TCharacter, TStatBlock>;
@@ -100,17 +102,3 @@ const CombatantDisplay = (props: {
 const Heading = ({ children }: PropsWithChildren) => (
   <h2 className="font-bold text-lg">{children}</h2>
 );
-
-const Button = ({
-  children,
-  ...props
-}: ButtonHTMLAttributes<HTMLButtonElement>) => {
-  return (
-    <button
-      className="bg-primary-500 hover:bg-primary-600 text-white font-bold py-2 px-4 rounded"
-      {...props}
-    >
-      {children}
-    </button>
-  );
-};
