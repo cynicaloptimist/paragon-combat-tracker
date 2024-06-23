@@ -1,4 +1,7 @@
-import { RulesPlugin } from "../RegisterPlugin";
+import _ from "lodash";
+import { PromptComponentProps, RulesPlugin } from "../RegisterPlugin";
+import { useRef } from "react";
+import { Button } from "../components/Button";
 
 export type DnD5eCharacter = {
   statBlock: DnD5eStatBlock;
@@ -58,4 +61,34 @@ export const dnd5e: RulesPlugin<DnD5eCharacter, DnD5eStatBlock> = {
       </div>
     );
   },
+  getCombatantCommands() {
+    return [
+      {
+        label: "Apply Damage",
+        prompt: ApplyDamagePrompt,
+      },
+    ];
+  },
+};
+
+const ApplyDamagePrompt = (props: PromptComponentProps<DnD5eCharacter>) => {
+  const inputRef = useRef<HTMLInputElement>(null);
+  return (
+    <div>
+      Apply Damage <input ref={inputRef} />{" "}
+      <Button
+        onClick={() => {
+          const damageAmount = inputRef.current?.value;
+          const newHp =
+            props.combatant.character.currentHP -
+            _.parseInt(damageAmount || "0");
+          props.combatant.character.currentHP = newHp;
+          props.updateCombatant(props.combatant);
+          props.complete();
+        }}
+      >
+        Submit
+      </Button>
+    </div>
+  );
 };

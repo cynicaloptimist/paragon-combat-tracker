@@ -1,5 +1,5 @@
-import { ButtonHTMLAttributes, PropsWithChildren, useState } from "react";
-import { RulesPlugin } from "../RegisterPlugin";
+import { PropsWithChildren, useCallback, useState } from "react";
+import { Combatant, RulesPlugin } from "../RegisterPlugin";
 import { useCombatStore } from "../state/useCombatStore";
 import { useTranslation } from "next-i18next";
 import { Button } from "./Button";
@@ -62,6 +62,17 @@ export function Tracker<TCharacter, TStatBlock>(
   );
 }
 
+function useArray<T>(initialArray?: T[]) {
+  const [state, setState] = useState<T[]>(initialArray || []);
+  const add = useCallback((addItem: T) => setState([...state, addItem]), []);
+  const remove = useCallback(
+    (removeItem: T) => setState(state.filter((item) => item === removeItem)),
+    []
+  );
+
+  return [state, add, remove] as const;
+}
+
 const CombatantDisplay = (props: {
   activeCombatantId: string | null;
   selectedCombatantId: string | null;
@@ -69,6 +80,8 @@ const CombatantDisplay = (props: {
 }) => {
   const state = useCombatStore((state) => state.combatState);
   const { t } = useTranslation("common");
+
+  const [prompts, addPrompt, removePrompt] = useArray<React.ReactElement>();
 
   const activeCombatant = props.activeCombatantId
     ? state.combatantsById[props.activeCombatantId]
@@ -78,11 +91,44 @@ const CombatantDisplay = (props: {
     ? state.combatantsById[props.selectedCombatantId]
     : null;
 
+  const updateCombatant = useCallback(
+    (c: Combatant<any>) => console.log(JSON.stringify(c)),
+    []
+  );
+
   if (selectedCombatant) {
     return (
       <div>
         <Heading>{t("tracker.selected-combatant")}</Heading>
         {props.rulesPlugin.renderFullView(selectedCombatant)}
+        {props.rulesPlugin.getCombatantCommands().map((c, i) => {
+          return (
+            <Button
+              key={i}
+              onClick={() => {
+                if (c.callback) {
+                  c.callback(selectedCombatant, updateCombatant);
+                }
+                if (c.prompt) {
+                  const Prompt = c.prompt;
+                  const promptId = generateId();
+                  const component = (
+                    <Prompt
+                      key={promptId}
+                      combatant={selectedCombatant}
+                      updateCombatant={updateCombatant}
+                      complete={() => removePrompt(component)}
+                    />
+                  );
+                  addPrompt(component);
+                }
+              }}
+            >
+              {c.label}
+            </Button>
+          );
+        })}
+        {prompts}
       </div>
     );
   }
