@@ -1,4 +1,6 @@
 import Head from "next/head";
+import { Tracker } from "~/components/Tracker";
+import { dnd5e } from "~/plugins/dnd5e.plugin";
 
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { NextPageContext } from "next";
@@ -21,7 +23,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <a href="/t/dnd5e">D&D 5e</a>
+        <Tracker rulesPlugin={dnd5e} />
       </main>
     </>
   );
