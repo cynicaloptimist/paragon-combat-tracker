@@ -1,6 +1,6 @@
 import _ from "lodash";
 import { PromptComponentProps, RulesPlugin } from "../RegisterPlugin";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { Button } from "../components/Button";
 
 export type DnD5eCharacter = {
@@ -47,7 +47,7 @@ export const dnd5e: RulesPlugin<DnD5eCharacter, DnD5eStatBlock> = {
   renderSmallView(combatant) {
     return <div>{JSON.stringify(combatant)}</div>;
   },
-  renderInitiativeRow(combatant) { // This needs to be a real component so it rerenders when dependencies change
+  renderInitiativeRow(combatant) {
     const { character, initiativeResult } = combatant;
     const { statBlock, currentHP } = character;
     const { name, maxHP } = statBlock;
@@ -73,6 +73,9 @@ export const dnd5e: RulesPlugin<DnD5eCharacter, DnD5eStatBlock> = {
 
 const ApplyDamagePrompt = (props: PromptComponentProps<DnD5eCharacter>) => {
   const inputRef = useRef<HTMLInputElement>(null);
+  useEffect(() => {
+    inputRef.current?.focus();
+  });
   return (
     <div>
       Apply Damage <input ref={inputRef} />{" "}
