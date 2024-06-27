@@ -78,18 +78,20 @@ const CombatantDisplay = (props: {
   selectedCombatantId: string | null;
   rulesPlugin: RulesPlugin<any, any>;
 }) => {
-  const state = useCombatStore((state) => state.combatState);
+  const combatantsById = useCombatStore(
+    (state) => state.combatState.combatantsById
+  );
   const updateCombatant = useCombatStore((state) => state.updateCombatant);
   const { t } = useTranslation("common");
 
   const [prompts, addPrompt, removePrompt] = useArray<React.ReactElement>();
 
   const activeCombatant = props.activeCombatantId
-    ? state.combatantsById[props.activeCombatantId]
+    ? combatantsById[props.activeCombatantId]
     : null;
 
   const selectedCombatant = props.selectedCombatantId
-    ? state.combatantsById[props.selectedCombatantId]
+    ? combatantsById[props.selectedCombatantId]
     : null;
 
   if (selectedCombatant) {
