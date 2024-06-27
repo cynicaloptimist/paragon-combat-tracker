@@ -1,9 +1,10 @@
 import { PropsWithChildren, useCallback, useState } from "react";
-import { Combatant, RulesPlugin } from "../RegisterPlugin";
+import { RulesPlugin } from "../RegisterPlugin";
 import { useCombatStore } from "../state/useCombatStore";
 import { useTranslation } from "next-i18next";
 import { Button } from "./Button";
 import { generateId } from "../state/generateId";
+import _ from "lodash";
 
 type TrackerProps<TCharacter, TStatBlock> = {
   rulesPlugin: RulesPlugin<TCharacter, TStatBlock>;
@@ -104,8 +105,9 @@ const CombatantDisplay = (props: {
             <Button
               key={i}
               onClick={() => {
+                const clonedCombatant = _.cloneDeep(selectedCombatant);
                 if (c.callback) {
-                  c.callback(selectedCombatant, updateCombatant);
+                  c.callback(clonedCombatant, updateCombatant);
                 }
                 if (c.prompt) {
                   const Prompt = c.prompt;
@@ -113,7 +115,7 @@ const CombatantDisplay = (props: {
                   const component = (
                     <Prompt
                       key={promptId}
-                      combatant={selectedCombatant}
+                      combatant={clonedCombatant}
                       updateCombatant={updateCombatant}
                       complete={() => removePrompt(component)}
                     />
