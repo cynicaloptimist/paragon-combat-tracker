@@ -1,11 +1,17 @@
 import { create } from "zustand";
+import { produce } from "immer";
+
 import { CombatState, getDefaultCombatState } from "./CombatState";
 import { dnd5e } from "../plugins/dnd5e.plugin";
+import { Combatant } from "~RegisterPlugin";
 
-export const useCombatStore = create<{
+type CombatStore = {
   combatState: CombatState<any>;
   nextTurn: () => void;
-}>((set, get) => ({
+  updateCombatant: (updatedCombatant: Combatant<any>) => void;
+};
+
+export const useCombatStore = create<CombatStore>((set, get) => ({
   combatState: getDefaultCombatState(dnd5e),
   nextTurn: () => {
     const combatState = get().combatState;
@@ -45,5 +51,13 @@ export const useCombatStore = create<{
       },
     });
     return;
+  },
+  updateCombatant: (updatedCombatant: Combatant<any>) => {
+    set(
+      produce<CombatStore>((state) => {
+        state.combatState.combatantsById[updatedCombatant.id] =
+          updatedCombatant;
+      })
+    );
   },
 }));

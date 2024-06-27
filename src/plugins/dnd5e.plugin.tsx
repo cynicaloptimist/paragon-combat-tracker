@@ -18,7 +18,7 @@ function DefaultStatBlock(): DnD5eStatBlock {
   return {
     initiativeModifier: 0,
     name: "Default StatBlock",
-    maxHP: 1,
+    maxHP: 10,
   };
 }
 
@@ -47,7 +47,7 @@ export const dnd5e: RulesPlugin<DnD5eCharacter, DnD5eStatBlock> = {
   renderSmallView(combatant) {
     return <div>{JSON.stringify(combatant)}</div>;
   },
-  renderInitiativeRow(combatant) {
+  renderInitiativeRow(combatant) { // This needs to be a real component so it rerenders when dependencies change
     const { character, initiativeResult } = combatant;
     const { statBlock, currentHP } = character;
     const { name, maxHP } = statBlock;
