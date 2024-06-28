@@ -2,6 +2,7 @@ import Head from "next/head";
 
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { NextPageContext } from "next";
+import { Button } from "~components/Button";
 
 export async function getStaticProps({ locale }: NextPageContext) {
   return {
@@ -21,7 +22,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <a href="/t/dnd5e">D&D 5e</a>
+        <Button href="/t/dnd5e">D&D 5e</Button>
       </main>
     </>
   );
