@@ -21,12 +21,11 @@ export const useCombatStore = create<CombatStore>((set, get) => ({
     }
     const activeCombatantId = combatState.activeCombatantId;
     if (!activeCombatantId) {
-      set({
-        combatState: {
-          ...combatState,
-          activeCombatantId: firstCombatantId,
-        },
-      });
+      set(
+        produce<CombatStore>((state) => {
+          state.combatState.activeCombatantId = firstCombatantId;
+        })
+      );
       return;
     }
 
@@ -44,12 +43,11 @@ export const useCombatStore = create<CombatStore>((set, get) => ({
       return;
     }
 
-    set({
-      combatState: {
-        ...combatState,
-        activeCombatantId: nextCombatantId,
-      },
-    });
+    set(
+      produce<CombatStore>((state) => {
+        state.combatState.activeCombatantId = nextCombatantId;
+      })
+    );
     return;
   },
   updateCombatant: (updatedCombatant: Combatant<any>) => {
