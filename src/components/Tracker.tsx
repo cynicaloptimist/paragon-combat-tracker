@@ -1,10 +1,11 @@
-import { PropsWithChildren, useCallback, useState } from "react";
+import { PropsWithChildren, useState } from "react";
 import { RulesPlugin } from "../RegisterPlugin";
 import { useCombatStore } from "../state/useCombatStore";
 import { useTranslation } from "next-i18next";
 import { Button } from "./Button";
 import { generateId } from "../state/generateId";
 import _ from "lodash";
+import { useArray } from "../hooks/useArray";
 
 type TrackerProps<TCharacter, TStatBlock> = {
   rulesPlugin: RulesPlugin<TCharacter, TStatBlock>;
@@ -63,17 +64,6 @@ export function Tracker<TCharacter, TStatBlock>(
       />
     </div>
   );
-}
-
-function useArray<T>(initialArray?: T[]) {
-  const [state, setState] = useState<T[]>(initialArray || []);
-  const add = useCallback((addItem: T) => setState([...state, addItem]), []);
-  const remove = useCallback(
-    (removeItem: T) => setState(state.filter((item) => item === removeItem)),
-    []
-  );
-
-  return [state, add, remove] as const;
 }
 
 const CombatantDisplay = (props: {
