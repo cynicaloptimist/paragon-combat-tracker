@@ -5,6 +5,7 @@
     "selected-combatant": "Selected Combatant"
   },
   "commands": {
-    "next-turn": "Next Turn"
+    "next-turn": "Next Turn",
+    "undo": "Undo"
   }
 }

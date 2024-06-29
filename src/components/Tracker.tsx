@@ -19,6 +19,7 @@ export function Tracker<TCharacter, TStatBlock>(
 
   const state = useCombatStore((state) => state.combatState);
   const nextTurn = useCombatStore((state) => state.nextTurn);
+  const { undo } = useCombatStore.temporal.getState();
   const [selectedCombatantId, setSelectedCombatantId] = useState<string | null>(
     null
   );
@@ -28,6 +29,7 @@ export function Tracker<TCharacter, TStatBlock>(
   return (
     <div className="m-8 gap-2 flex flex-col">
       <Button onClick={() => nextTurn()}>{t("commands.next-turn")}</Button>
+      <Button onClick={() => undo()}>{t("commands.undo")}</Button>
       <Heading>{t("tracker.initiative-order")}</Heading>
       <div>
         {state.initiativeOrderCombatantIds.map((combatantId) => {
