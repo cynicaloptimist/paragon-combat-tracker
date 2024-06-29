@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
+import { temporal } from "zundo";
 
 import { CombatState, getDefaultCombatState } from "./CombatState";
 import { dnd5e } from "../plugins/dnd5e.plugin";
@@ -12,46 +13,48 @@ type CombatStore = {
 };
 
 export const useCombatStore = create<CombatStore>()(
-  immer((set, get) => ({
-    combatState: getDefaultCombatState(dnd5e),
-    nextTurn: () => {
-      const combatState = get().combatState;
-      const firstCombatantId = combatState.initiativeOrderCombatantIds[0];
-      if (!firstCombatantId) {
-        return;
-      }
-      const activeCombatantId = combatState.activeCombatantId;
-      if (!activeCombatantId) {
+  temporal(
+    immer((set, get) => ({
+      combatState: getDefaultCombatState(dnd5e),
+      nextTurn: () => {
+        const combatState = get().combatState;
+        const firstCombatantId = combatState.initiativeOrderCombatantIds[0];
+        if (!firstCombatantId) {
+          return;
+        }
+        const activeCombatantId = combatState.activeCombatantId;
+        if (!activeCombatantId) {
+          set((state) => {
+            state.combatState.activeCombatantId = firstCombatantId;
+          });
+          return;
+        }
+
+        const currentCombatantIndex =
+          combatState.initiativeOrderCombatantIds.indexOf(activeCombatantId);
+
+        const nextCombatantIndex =
+          (currentCombatantIndex + 1) %
+          combatState.initiativeOrderCombatantIds.length;
+
+        const nextCombatantId =
+          combatState.initiativeOrderCombatantIds[nextCombatantIndex];
+
+        if (!nextCombatantId) {
+          return;
+        }
+
         set((state) => {
-          state.combatState.activeCombatantId = firstCombatantId;
+          state.combatState.activeCombatantId = nextCombatantId;
         });
         return;
-      }
-
-      const currentCombatantIndex =
-        combatState.initiativeOrderCombatantIds.indexOf(activeCombatantId);
-
-      const nextCombatantIndex =
-        (currentCombatantIndex + 1) %
-        combatState.initiativeOrderCombatantIds.length;
-
-      const nextCombatantId =
-        combatState.initiativeOrderCombatantIds[nextCombatantIndex];
-
-      if (!nextCombatantId) {
-        return;
-      }
-
-      set((state) => {
-        state.combatState.activeCombatantId = nextCombatantId;
-      });
-      return;
-    },
-    updateCombatant: (updatedCombatant: Combatant<any>) => {
-      set((state) => {
-        state.combatState.combatantsById[updatedCombatant.id] =
-          updatedCombatant;
-      });
-    },
-  }))
+      },
+      updateCombatant: (updatedCombatant: Combatant<any>) => {
+        set((state) => {
+          state.combatState.combatantsById[updatedCombatant.id] =
+            updatedCombatant;
+        });
+      },
+    }))
+  )
 );
