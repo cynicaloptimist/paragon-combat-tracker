@@ -2,7 +2,7 @@ import Head from "next/head";
 
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { NextPageContext } from "next";
-import { Button } from "~components/Button";
+import { Button } from "~/components/Button";
 
 export async function getStaticProps({ locale }: NextPageContext) {
   return {
