@@ -1,4 +1,4 @@
-import { PropsWithChildren, useState } from "react";
+import { useState } from "react";
 import { RulesPlugin } from "../RegisterPlugin";
 import { useCombatStore } from "../state/useCombatStore";
 import { useTranslation } from "next-i18next";
@@ -6,6 +6,7 @@ import { Button } from "./Button";
 import { generateId } from "../state/generateId";
 import _ from "lodash";
 import { useArray } from "../hooks/useArray";
+import { Heading } from "./Heading";
 
 type TrackerProps<TCharacter, TStatBlock> = {
   rulesPlugin: RulesPlugin<TCharacter, TStatBlock>;
@@ -137,6 +138,4 @@ const CombatantDisplay = (props: {
   return null;
 };
 
-const Heading = ({ children }: PropsWithChildren) => (
-  <h2 className="font-bold text-lg">{children}</h2>
-);
+
