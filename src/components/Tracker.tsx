@@ -91,7 +91,6 @@ const CombatantDisplay = (props: {
     return (
       <div>
         <Heading>{t("tracker.selected-combatant")}</Heading>
-        <div>{props.rulesPlugin.renderFullView(selectedCombatant)}</div>
         <CombatantCommands
           combatant={selectedCombatant}
           rulesPlugin={props.rulesPlugin}
@@ -99,6 +98,7 @@ const CombatantDisplay = (props: {
           removePrompt={removePrompt}
         />
         {prompts}
+        <div>{props.rulesPlugin.renderFullView(selectedCombatant)}</div>
       </div>
     );
   }
