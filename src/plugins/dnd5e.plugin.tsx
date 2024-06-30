@@ -43,10 +43,10 @@ export const dnd5e: RulesPlugin<DnD5eCharacter, DnD5eStatBlock> = {
     };
   },
   renderFullView(combatant) {
-    return <div>{JSON.stringify(combatant)}</div>;
+    return <code>{JSON.stringify(combatant, null, 2)}</code>;
   },
   renderSmallView(combatant) {
-    return <div>{JSON.stringify(combatant)}</div>;
+    return <code>{JSON.stringify(combatant, null, 2)}</code>;
   },
   renderInitiativeRow(combatant) {
     const { character, initiativeResult } = combatant;
