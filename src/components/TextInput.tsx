@@ -15,9 +15,10 @@ export const TextInput = (props: {
   const inputId = useRef(generateId());
 
   return (
-    <div className="flex flex-row gap-2">
+    <div className="flex flex-row gap-2 items-center">
       <label htmlFor={inputId.current}>{props.label}</label>
       <input
+        className="border-2 rounded-md p-1 border-primary-300 focus:outline-primary-600"
         id={inputId.current}
         autoFocus
         ref={props.itemRef}
