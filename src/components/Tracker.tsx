@@ -29,7 +29,7 @@ export function Tracker<TCharacter, TStatBlock>(
   const activeCombatantId = state.activeCombatantId;
 
   return (
-    <div className="m-8 gap-2 flex flex-col">
+    <div className="m-2 md:m-8 gap-2 flex flex-col">
       <Button onClick={() => nextTurn()}>{t("commands.next-turn")}</Button>
       <Button onClick={() => undo()}>{t("commands.undo")}</Button>
       <Heading>{t("tracker.initiative-order")}</Heading>
