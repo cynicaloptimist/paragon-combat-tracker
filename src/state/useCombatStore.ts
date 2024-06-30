@@ -12,6 +12,10 @@ type CombatStore = {
   updateCombatant: (updatedCombatant: Combatant<any>) => void;
 };
 
+// CombatStore is a zustand store that manages the state of the combat tracker.
+// It uses the immer middleware to allow for mutable updates to the state.
+// Zundo is used to provide undo functionality to the store.
+
 export const useCombatStore = create<CombatStore>()(
   temporal(
     immer((set, get) => ({
