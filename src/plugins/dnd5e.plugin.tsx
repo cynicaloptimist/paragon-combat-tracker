@@ -88,8 +88,8 @@ const ApplyDamagePrompt = (props: PromptComponentProps<DnD5eCharacter>) => {
   }, [props]);
 
   return (
-    <div>
-      <TextInput itemRef={inputRef} label="Apply Damage" onEnter={onSubmit} />{" "}
+    <div className="flex flex-row items-center m-8 gap-2">
+      <TextInput itemRef={inputRef} label="Apply Damage" onEnter={onSubmit} />
       <Button onClick={onSubmit}>Submit</Button>
     </div>
   );
