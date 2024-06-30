@@ -43,10 +43,18 @@ export const dnd5e: RulesPlugin<DnD5eCharacter, DnD5eStatBlock> = {
     };
   },
   renderFullView(combatant) {
-    return <code>{JSON.stringify(combatant, null, 2)}</code>;
+    return (
+      <pre className="overflow-x-auto">
+        {JSON.stringify(combatant, null, 2)}
+      </pre>
+    );
   },
   renderSmallView(combatant) {
-    return <code>{JSON.stringify(combatant, null, 2)}</code>;
+    return (
+      <pre className="overflow-x-auto">
+        {JSON.stringify(combatant, null, 2)}
+      </pre>
+    );
   },
   renderInitiativeRow(combatant) {
     const { character, initiativeResult } = combatant;
@@ -88,7 +96,7 @@ const ApplyDamagePrompt = (props: PromptComponentProps<DnD5eCharacter>) => {
   }, [props]);
 
   return (
-    <div className="flex flex-row items-center m-8 gap-2">
+    <div className="flex flex-row items-center gap-2">
       <TextInput itemRef={inputRef} label="Apply Damage" onEnter={onSubmit} />
       <Button onClick={onSubmit}>Submit</Button>
     </div>

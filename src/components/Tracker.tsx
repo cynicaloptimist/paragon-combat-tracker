@@ -89,7 +89,7 @@ const CombatantDisplay = (props: {
 
   if (selectedCombatant) {
     return (
-      <div>
+      <div className="flex flex-col gap-2">
         <Heading>{t("tracker.selected-combatant")}</Heading>
         <CombatantCommands
           combatant={selectedCombatant}
