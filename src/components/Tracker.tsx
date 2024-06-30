@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { RulesPlugin } from "../RegisterPlugin";
+import { Combatant, RulesPlugin } from "../RegisterPlugin";
 import { useCombatStore } from "../state/useCombatStore";
 import { useTranslation } from "next-i18next";
 import { Button } from "./Button";
@@ -75,7 +75,6 @@ const CombatantDisplay = (props: {
   const combatantsById = useCombatStore(
     (state) => state.combatState.combatantsById
   );
-  const updateCombatant = useCombatStore((state) => state.updateCombatant);
   const { t } = useTranslation("common");
 
   const [prompts, addPrompt, removePrompt] = useArray<React.ReactElement>();
@@ -92,35 +91,13 @@ const CombatantDisplay = (props: {
     return (
       <div>
         <Heading>{t("tracker.selected-combatant")}</Heading>
-        {props.rulesPlugin.renderFullView(selectedCombatant)}
-        {props.rulesPlugin.getCombatantCommands().map((c, i) => {
-          return (
-            <Button
-              key={i}
-              onClick={() => {
-                const clonedCombatant = _.cloneDeep(selectedCombatant);
-                if (c.callback) {
-                  c.callback(clonedCombatant, updateCombatant);
-                }
-                if (c.prompt) {
-                  const Prompt = c.prompt;
-                  const promptId = generateId();
-                  const component = (
-                    <Prompt
-                      key={promptId}
-                      combatant={clonedCombatant}
-                      updateCombatant={updateCombatant}
-                      complete={() => removePrompt(component)}
-                    />
-                  );
-                  addPrompt(component);
-                }
-              }}
-            >
-              {c.label}
-            </Button>
-          );
-        })}
+        <div>{props.rulesPlugin.renderFullView(selectedCombatant)}</div>
+        <CombatantCommands
+          combatant={selectedCombatant}
+          rulesPlugin={props.rulesPlugin}
+          addPrompt={addPrompt}
+          removePrompt={removePrompt}
+        />
         {prompts}
       </div>
     );
@@ -138,4 +115,45 @@ const CombatantDisplay = (props: {
   return null;
 };
 
+const CombatantCommands = (props: {
+  rulesPlugin: RulesPlugin<any, any>;
+  combatant: Combatant | null | undefined;
+  addPrompt: (prompt: React.ReactElement) => void;
+  removePrompt: (prompt: React.ReactElement) => void;
+}) => {
+  const { combatant, rulesPlugin, addPrompt, removePrompt } = props;
+  const updateCombatant = useCombatStore((state) => state.updateCombatant);
 
+  if (!combatant) {
+    return null;
+  }
+
+  return rulesPlugin.getCombatantCommands().map((c, i) => {
+    return (
+      <Button
+        key={i}
+        onClick={() => {
+          const clonedCombatant = _.cloneDeep(combatant);
+          if (c.callback) {
+            c.callback(clonedCombatant, updateCombatant);
+          }
+          if (c.prompt) {
+            const Prompt = c.prompt;
+            const promptId = generateId();
+            const component = (
+              <Prompt
+                key={promptId}
+                combatant={clonedCombatant}
+                updateCombatant={updateCombatant}
+                complete={() => removePrompt(component)}
+              />
+            );
+            addPrompt(component);
+          }
+        }}
+      >
+        {c.label}
+      </Button>
+    );
+  });
+};
