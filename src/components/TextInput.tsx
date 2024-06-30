@@ -1,3 +1,6 @@
+import { useRef } from "react";
+import { generateId } from "~/state/generateId";
+
 export const TextInput = (props: {
   itemRef: React.RefObject<HTMLInputElement>;
   label: string;
@@ -9,10 +12,17 @@ export const TextInput = (props: {
     }
   };
 
+  const inputId = useRef(generateId());
+
   return (
-    <div>
-      {props.label}
-      <input autoFocus ref={props.itemRef} onKeyDown={onKeyDown} />
+    <div className="flex flex-row gap-2">
+      <label htmlFor={inputId.current}>{props.label}</label>
+      <input
+        id={inputId.current}
+        autoFocus
+        ref={props.itemRef}
+        onKeyDown={onKeyDown}
+      />
     </div>
   );
 };
