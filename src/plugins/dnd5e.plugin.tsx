@@ -1,7 +1,8 @@
 import _ from "lodash";
 import { PromptComponentProps, RulesPlugin } from "../RegisterPlugin";
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { Button } from "../components/Button";
+import { TextInput } from "../components/TextInput";
 
 export type DnD5eCharacter = {
   statBlock: DnD5eStatBlock;
@@ -76,22 +77,20 @@ const ApplyDamagePrompt = (props: PromptComponentProps<DnD5eCharacter>) => {
   useEffect(() => {
     inputRef.current?.focus();
   });
+
+  const onSubmit = useCallback(() => {
+    const damageAmount = inputRef.current?.value;
+    const newHp =
+      props.combatant.character.currentHP - _.parseInt(damageAmount || "0");
+    props.combatant.character.currentHP = newHp;
+    props.updateCombatant(props.combatant);
+    props.complete();
+  }, [props]);
+
   return (
     <div>
-      Apply Damage <input ref={inputRef} />{" "}
-      <Button
-        onClick={() => {
-          const damageAmount = inputRef.current?.value;
-          const newHp =
-            props.combatant.character.currentHP -
-            _.parseInt(damageAmount || "0");
-          props.combatant.character.currentHP = newHp;
-          props.updateCombatant(props.combatant);
-          props.complete();
-        }}
-      >
-        Submit
-      </Button>
+      <TextInput itemRef={inputRef} label="Apply Damage" onEnter={onSubmit} />{" "}
+      <Button onClick={onSubmit}>Submit</Button>
     </div>
   );
 };
