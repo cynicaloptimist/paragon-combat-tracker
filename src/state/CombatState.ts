@@ -13,7 +13,7 @@ const makeDefaultCombatant = (
 ) => {
   const statblock = rulesPlugin.loadStatBlock("");
   const character = rulesPlugin.initializeCharacter(statblock);
-  const combatant: Combatant<any> = {
+  const combatant: Combatant = {
     id: combatantId,
     character,
     initiativeResult: "0",
@@ -23,7 +23,7 @@ const makeDefaultCombatant = (
 
 export const getDefaultCombatState: (
   rulesPlugin: RulesPlugin<any, any>
-) => CombatState<any> = (rulesPlugin) => {
+) => CombatState<any> = (rulesPlugin: RulesPlugin<any, any>) => {
   const combatant = makeDefaultCombatant(rulesPlugin, "1");
   const combatant2 = makeDefaultCombatant(rulesPlugin, "2");
   const combatant3 = makeDefaultCombatant(rulesPlugin, "3");
@@ -38,23 +38,20 @@ export const getDefaultCombatState: (
   return {
     activeCombatantId: null,
     combatantsById,
-    initiativeOrderCombatantIds: getInitiativeSortedIdsCombatants(combatantsById).map(
-      ([combatantId]) => combatantId
-    ),
+    initiativeOrderCombatantIds: getInitiativeSortedIdsCombatants(
+      combatantsById
+    ).map(([combatantId]) => combatantId),
   };
 };
 
-export const sortCombatantsDefault = (
-  c1: Combatant<any>,
-  c2: Combatant<any>
-) => {
+export const sortCombatantsDefault = (c1: Combatant, c2: Combatant) => {
   const i1 = _.parseInt(c1.initiativeResult);
   const i2 = _.parseInt(c2.initiativeResult);
   return i2 - i1;
 };
 
 export function getInitiativeSortedIdsCombatants(
-  combatantsById: Record<string, Combatant<any>>
+  combatantsById: Record<string, Combatant>
 ) {
   return Object.entries(combatantsById).sort(
     ([_k1, combatant1], [_k2, combatant2]) =>
