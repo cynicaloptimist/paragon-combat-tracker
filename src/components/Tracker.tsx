@@ -111,7 +111,7 @@ const CombatantDisplay = (props: {
 
   if (activeCombatant) {
     return (
-      <div>
+      <div className="flex flex-col gap-2">
         <Heading>{t("tracker.active-combatant")}</Heading>
         {props.rulesPlugin.renderFullView(activeCombatant)}
       </div>
