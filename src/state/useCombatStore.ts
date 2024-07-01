@@ -4,7 +4,7 @@ import { temporal } from "zundo";
 
 import { CombatState, getDefaultCombatState } from "./CombatState";
 import { dnd5e } from "~/plugins/dnd5e.plugin";
-import { Combatant } from "~/plugin-utils/RegisterPlugin";
+import { Combatant } from "~/plugin-utils/RulesPlugin";
 
 type CombatStore = {
   combatState: CombatState<any>;

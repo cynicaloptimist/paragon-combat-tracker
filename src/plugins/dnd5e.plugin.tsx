@@ -1,5 +1,6 @@
 import _ from "lodash";
-import { PromptComponentProps, RulesPlugin } from "~/plugin-utils/RegisterPlugin";
+import { PromptComponentProps } from "~/plugin-utils/RulesPlugin";
+import { RulesPlugin } from "~/plugin-utils/RulesPlugin";
 import { useCallback, useEffect, useRef } from "react";
 import { Button } from "~/components/Button";
 import { TextInput } from "~/components/TextInput";

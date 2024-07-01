@@ -1,5 +1,6 @@
 import _ from "lodash";
-import { Combatant, RulesPlugin } from "~/plugin-utils/RegisterPlugin";
+import { Combatant } from "~/plugin-utils/RulesPlugin";
+import { RulesPlugin } from "~/plugin-utils/RulesPlugin";
 
 export type CombatState<TCharacter> = {
   combatantsById: Record<string, Combatant<TCharacter>>;
