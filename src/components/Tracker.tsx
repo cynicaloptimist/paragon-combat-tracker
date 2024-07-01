@@ -42,7 +42,13 @@ export function Tracker<TCharacter, TStatBlock>(
           return (
             <div
               key={combatantId}
-              onClick={() => setSelectedCombatantId(combatantId)}
+              onClick={() => {
+                if (selectedCombatantId !== combatantId) {
+                  setSelectedCombatantId(combatantId);
+                } else {
+                  setSelectedCombatantId(null);
+                }
+              }}
               className={`transition-colors ease-linear duration-300 border-2 ${
                 activeCombatantId === combatantId
                   ? "bg-primary-200 font-bold"
