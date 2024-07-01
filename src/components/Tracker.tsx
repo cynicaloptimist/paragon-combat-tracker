@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Combatant, RulesPlugin } from "../RegisterPlugin";
+import { Combatant, RulesPlugin } from "../plugin-utils/RegisterPlugin";
 import { useCombatStore } from "../state/useCombatStore";
 import { useTranslation } from "next-i18next";
 import { Button } from "./Button";
