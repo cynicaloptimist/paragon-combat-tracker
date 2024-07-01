@@ -1,8 +1,8 @@
 import _ from "lodash";
-import { PromptComponentProps, RulesPlugin } from "../plugin-utils/RegisterPlugin";
+import { PromptComponentProps, RulesPlugin } from "~/plugin-utils/RegisterPlugin";
 import { useCallback, useEffect, useRef } from "react";
-import { Button } from "../components/Button";
-import { TextInput } from "../components/TextInput";
+import { Button } from "~/components/Button";
+import { TextInput } from "~/components/TextInput";
 
 export type DnD5eCharacter = {
   statBlock: DnD5eStatBlock;

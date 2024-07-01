@@ -3,8 +3,8 @@ import { immer } from "zustand/middleware/immer";
 import { temporal } from "zundo";
 
 import { CombatState, getDefaultCombatState } from "./CombatState";
-import { dnd5e } from "../plugins/dnd5e.plugin";
-import { Combatant } from "~/RegisterPlugin";
+import { dnd5e } from "~/plugins/dnd5e.plugin";
+import { Combatant } from "~/plugin-utils/RegisterPlugin";
 
 type CombatStore = {
   combatState: CombatState<any>;

@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { Combatant, RulesPlugin } from "../plugin-utils/RegisterPlugin";
-import { useCombatStore } from "../state/useCombatStore";
+import { Combatant, RulesPlugin } from "~/plugin-utils/RegisterPlugin";
+import { useCombatStore } from "~/state/useCombatStore";
 import { useTranslation } from "next-i18next";
 import { Button } from "./Button";
-import { generateId } from "../state/generateId";
+import { generateId } from "~/state/generateId";
 import _ from "lodash";
-import { useArray } from "../hooks/useArray";
+import { useArray } from "~/hooks/useArray";
 import { Heading } from "./Heading";
 
 type TrackerProps<TCharacter, TStatBlock> = {
