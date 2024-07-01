@@ -22,7 +22,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <div className="m-8 flex flex-col items-center">
+        <div className="m-2 md:m-8 flex flex-col items-center">
           <div className="gap-2 flex flex-col w-80">
             <Button href="/t/dnd5e">D&D 5e</Button>
           </div>
