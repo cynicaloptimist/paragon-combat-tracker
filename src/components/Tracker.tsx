@@ -31,8 +31,7 @@ export function Tracker<TCharacter, TStatBlock>(
 
   return (
     <div className="m-2 md:m-8 gap-2 flex flex-col">
-      <Button onClick={() => nextTurn()}>{t("commands.next-turn")}</Button>
-      <Button onClick={() => undo()}>{t("commands.undo")}</Button>
+      <TrackerCommands />
       <Heading>{t("tracker.initiative-order")}</Heading>
       <div>
         {state.initiativeOrderCombatantIds.map((combatantId) => {
@@ -73,6 +72,20 @@ export function Tracker<TCharacter, TStatBlock>(
     </div>
   );
 }
+
+const TrackerCommands = () => {
+  const { t } = useTranslation("common");
+  const nextTurn = useCombatStore((state) => state.nextTurn);
+  const { undo } = useCombatStore.temporal.getState();
+
+  return (
+    // positioned div that floats over the bottom of the screen and shows its children in a row
+    <div className="fixed bottom-0 left-0 right-0 flex justify-center gap-2 p-2">
+      <Button onClick={() => nextTurn()}>{t("commands.next-turn")}</Button>
+      <Button onClick={() => undo()}>{t("commands.undo")}</Button>
+    </div>
+  );
+};
 
 const CombatantDisplay = (props: {
   activeCombatantId: string | null;
