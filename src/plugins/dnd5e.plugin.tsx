@@ -62,7 +62,7 @@ export const dnd5e: RulesPlugin<DnD5eCharacter, DnD5eStatBlock> = {
     const { statBlock, currentHP } = character;
     const { name, maxHP } = statBlock;
     return (
-      <div className="flex flex-row gap-2">
+      <div className="flex flex-row gap-2 py-2">
         <div className="font-bold text-right w-6">{initiativeResult}</div>
         <div>{name}</div>
         <div>
