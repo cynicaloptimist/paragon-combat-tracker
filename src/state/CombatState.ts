@@ -28,11 +28,15 @@ export const getDefaultCombatState: (
   const combatant = makeDefaultCombatant(rulesPlugin, "1");
   const combatant2 = makeDefaultCombatant(rulesPlugin, "2");
   const combatant3 = makeDefaultCombatant(rulesPlugin, "3");
+  const additionalCombatants = _.times(8, (i) =>
+    makeDefaultCombatant(rulesPlugin, (i + 5).toString())
+  );
+
   combatant.initiativeResult = "10";
   combatant2.initiativeResult = "4a";
   combatant3.initiativeResult = "5a";
   const combatantsById = _.keyBy(
-    [combatant, combatant2, combatant3],
+    [combatant, combatant2, combatant3, ...additionalCombatants],
     (c) => c.id
   );
 
