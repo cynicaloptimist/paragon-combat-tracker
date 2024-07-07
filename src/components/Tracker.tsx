@@ -79,7 +79,6 @@ const TrackerCommands = () => {
   const { undo } = useCombatStore.temporal.getState();
 
   return (
-    // positioned div that floats over the bottom of the screen and shows its children in a row
     <div className="fixed bottom-0 left-0 right-0 flex justify-center gap-2 p-2">
       <Button onClick={() => nextTurn()}>{t("commands.next-turn")}</Button>
       <Button onClick={() => undo()}>{t("commands.undo")}</Button>
