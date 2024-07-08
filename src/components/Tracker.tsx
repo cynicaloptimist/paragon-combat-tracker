@@ -30,10 +30,10 @@ export function Tracker<TCharacter, TStatBlock>(
   const activeCombatantId = state.activeCombatantId;
 
   return (
-    <div className="m-2 md:m-8 gap-2 flex flex-col">
+    <div className="gap-2 flex flex-col h-full">
       <TrackerCommands />
-      <Heading>{t("tracker.initiative-order")}</Heading>
-      <div>
+      <div className="m-2 md:m-8 flex flex-col flex-1 overflow-auto">
+        <Heading>{t("tracker.initiative-order")}</Heading>
         {state.initiativeOrderCombatantIds.map((combatantId) => {
           const combatant = state.combatantsById[combatantId];
           if (!combatant) {
@@ -64,11 +64,13 @@ export function Tracker<TCharacter, TStatBlock>(
           );
         })}
       </div>
-      <CombatantDisplay
-        activeCombatantId={activeCombatantId}
-        selectedCombatantId={selectedCombatantId}
-        rulesPlugin={rulesPlugin}
-      />
+      <div className="m-2 md:m-8 flex-1/3 overflow-auto">
+        <CombatantDisplay
+          activeCombatantId={activeCombatantId}
+          selectedCombatantId={selectedCombatantId}
+          rulesPlugin={rulesPlugin}
+        />
+      </div>
     </div>
   );
 }
