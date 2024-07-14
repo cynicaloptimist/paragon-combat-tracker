@@ -110,7 +110,7 @@ const CombatantDisplay = (props: {
 
   if (selectedCombatant) {
     return (
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2 pb-28">
         <Heading>{t("tracker.selected-combatant")}</Heading>
         <CombatantCommands
           combatant={selectedCombatant}
@@ -126,7 +126,7 @@ const CombatantDisplay = (props: {
 
   if (activeCombatant) {
     return (
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2 pb-14">
         <Heading>{t("tracker.active-combatant")}</Heading>
         {props.rulesPlugin.renderFullView(activeCombatant)}
       </div>
@@ -149,32 +149,36 @@ const CombatantCommands = (props: {
     return null;
   }
 
-  return rulesPlugin.getCombatantCommands().map((c, i) => {
-    return (
-      <Button
-        key={i}
-        onClick={() => {
-          const clonedCombatant = _.cloneDeep(combatant);
-          if (c.callback) {
-            c.callback(clonedCombatant, updateCombatant);
-          }
-          if (c.prompt) {
-            const Prompt = c.prompt;
-            const promptId = generateId();
-            const component = (
-              <Prompt
-                key={promptId}
-                combatant={clonedCombatant}
-                updateCombatant={updateCombatant}
-                complete={() => removePrompt(component)}
-              />
-            );
-            addPrompt(component);
-          }
-        }}
-      >
-        {c.label}
-      </Button>
-    );
-  });
+  return (
+    <div className="fixed bottom-12 left-0 right-0 flex justify-center gap-2 p-2">
+      {rulesPlugin.getCombatantCommands().map((c, i) => {
+        return (
+          <Button
+            key={i}
+            onClick={() => {
+              const clonedCombatant = _.cloneDeep(combatant);
+              if (c.callback) {
+                c.callback(clonedCombatant, updateCombatant);
+              }
+              if (c.prompt) {
+                const Prompt = c.prompt;
+                const promptId = generateId();
+                const component = (
+                  <Prompt
+                    key={promptId}
+                    combatant={clonedCombatant}
+                    updateCombatant={updateCombatant}
+                    complete={() => removePrompt(component)}
+                  />
+                );
+                addPrompt(component);
+              }
+            }}
+          >
+            {c.label}
+          </Button>
+        );
+      })}
+    </div>
+  );
 };
