@@ -1,3 +1,30 @@
+# Paragon Combat Tracker
+
+Paragon Combat Tracker (PCT) is a generic combat tracker app for tabletop RPGs, such as Dungeons and Dragons and Pathfinder.
+PCT is built on a plugin foundation, which attempts to separate concerns that are generally common to all target RPGs, versus concerns that are specific to a particular game's ruleset.
+
+## Common Concepts
+ 
+ * Turn Order
+ * Undo / Redo
+ * A Character is a single, unique creature. It has a name, and "current" values for RPG-specific attributes like HP.
+ * A StatBlock represents the "template" that we can make new characters from, like 'Goblin'. 
+    * A Character is not required to have a StatBlock.
+ * A Combatant is a Character that is in an Encounter. They have an Initiative score.
+ * A Combat is a collection of Combatants, with information about whose turn it is.
+
+## RPG-Specific Concepts
+ * Hit points / wounds / vitality, armor class / defenses, moves / abilities / powers, etc.
+ * How do we modify "current" values like HP on the fly?
+ * How is a Combatant rendered in the Initiative List?
+ * How is a Combatant's Character details rendered?
+ * Where are StatBlocks loaded from?
+ * How is the Character Editor rendered?
+
+To add a new system plugin, start by making new entries in the `src\pages\t` and `src\plugins` directories, and add a link to your plugin in `src\pages\index.tsx`. New plugins are welcome as PR contributions to this repo.
+
+# NextJS
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
