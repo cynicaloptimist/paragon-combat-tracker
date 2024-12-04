@@ -62,12 +62,15 @@ function DefaultStatBlock(): Pf2StatBlock {
 
 export const pf2: RulesPlugin<Pf2Character, Pf2StatBlock> = {
   loadStatBlock(inputString) {
-    return DefaultStatBlock();
+    const statBlock = pf2StatBlockSchema.parse(JSON.parse(inputString));
+    return statBlock;
   },
   loadCharacter(inputString) {
-    const currentHP = parseInt(DefaultStatBlock().data.attributes.hp.max);
+    const statBlock = pf2StatBlockSchema.parse(JSON.parse(inputString));
+
+    const currentHP = parseInt(statBlock.data.attributes.hp.max);
     return {
-      statBlock: DefaultStatBlock(),
+      statBlock: statBlock,
       currentHP: currentHP,
     };
   },

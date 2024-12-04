@@ -12,7 +12,7 @@ const makeDefaultCombatant = (
   rulesPlugin: RulesPlugin<any, any>,
   combatantId: string
 ) => {
-  const statblock = rulesPlugin.loadStatBlock("");
+  const statblock = rulesPlugin.loadStatBlock("{}");
   const character = rulesPlugin.initializeCharacter(statblock);
   const combatant: Combatant = {
     id: combatantId,
