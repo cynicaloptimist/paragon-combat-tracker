@@ -19,6 +19,7 @@ const makeDefaultCombatant = (
     character,
     initiativeResult: "0",
   };
+  combatant.initiativeResult = rulesPlugin.getInitiativeResult(combatant);
   return combatant;
 };
 
