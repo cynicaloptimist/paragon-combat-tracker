@@ -3,8 +3,8 @@ import { immer } from "zustand/middleware/immer";
 import { temporal } from "zundo";
 
 import { CombatState, getDefaultCombatState } from "./CombatState";
-import { dnd5e } from "~/plugins/dnd5e.plugin";
 import { Combatant } from "~/plugin-utils/RulesPlugin";
+import { pf2 } from "~/plugins/pf2.plugin";
 
 type CombatStore = {
   combatState: CombatState<any>;
@@ -19,7 +19,7 @@ type CombatStore = {
 export const useCombatStore = create<CombatStore>()(
   temporal(
     immer((set, get) => ({
-      combatState: getDefaultCombatState(dnd5e),
+      combatState: getDefaultCombatState(pf2),
       nextTurn: () => {
         const combatState = get().combatState;
         const firstCombatantId = combatState.initiativeOrderCombatantIds[0];

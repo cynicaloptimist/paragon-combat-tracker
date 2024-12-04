@@ -11,55 +11,49 @@ export type Pf2Character = {
   currentHP: number;
 };
 
-const traitSchema = z.object({
-  name: z.string().optional(),
-  description: z.string().optional(),
-  usage: z.string().optional(),
-});
+const obj = (objectType: z.ZodRawShape) => {
+  return z.object(objectType).default({});
+};
 
-const pf2StatBlockSchema = z.object({
-  initiativeModifier: z.number().default(0),
-  name: z.string().default("Default StatBlock"),
-  size: z.string().default("Medium"),
-  type: z.string().default(""),
-  alignment: z.string().default(""),
-  maxHP: z.number().default(10),
-  hitDice: z.string().default(""),
-  armorClass: z.number().default(10),
-  armorClassNotes: z.string().default(""),
-  speeds: z.array(z.string()).default([]),
-  abilityScores: z
-    .object({
-      strength: z.number().default(10),
-      dexterity: z.number().default(10),
-      constitution: z.number().default(10),
-      intelligence: z.number().default(10),
-      wisdom: z.number().default(10),
-      charisma: z.number().default(10),
-    })
-    .default({}),
-  savingThrows: z
-    .object({
-      strength: z.number().optional(),
-      dexterity: z.number().optional(),
-      constitution: z.number().optional(),
-      intelligence: z.number().optional(),
-      wisdom: z.number().optional(),
-      charisma: z.number().optional(),
-    })
-    .default({}),
-  skills: z.record(z.number()).default({}),
-  senses: z.array(z.string()).default([]),
-  languages: z.array(z.string()).default([]),
-  challengeRating: z.string().default("0"),
-  proficiencyBonus: z.number().default(2),
-  traits: z.array(traitSchema).default([]),
-  actions: z.array(traitSchema).default([]),
-  reactions: z.array(traitSchema).default([]),
-  bonusActions: z.array(traitSchema).default([]),
-  legendaryActions: z.array(traitSchema).default([]),
+const pf2StatBlockSchema = obj({
+  _id: z.string().default(""),
+  name: z.string().default("Unnamed Statblock"),
+  data: obj({
+    abilities: obj({
+      cha: obj({
+        value: z.number().default(10),
+      }),
+      con: obj({
+        value: z.number().default(10),
+      }),
+      dex: obj({
+        value: z.number().default(10),
+      }),
+      int: obj({
+        value: z.number().default(10),
+      }),
+      str: obj({
+        value: z.number().default(10),
+      }),
+      wis: obj({
+        value: z.number().default(10),
+      }),
+    }),
+    attributes: obj({
+      ac: obj({
+        value: z.string().default("10"),
+        details: z.string().default(""),
+      }),
+      hp: obj({
+        max: z.string().default("1"),
+        details: z.string().default(""),
+      }),
+      init: obj({
+        bonus: z.number().default(0),
+      }),
+    }),
+  }),
 });
-
 export type Pf2StatBlock = z.infer<typeof pf2StatBlockSchema>;
 
 function DefaultStatBlock(): Pf2StatBlock {
@@ -71,18 +65,20 @@ export const pf2: RulesPlugin<Pf2Character, Pf2StatBlock> = {
     return DefaultStatBlock();
   },
   loadCharacter(inputString) {
+    const currentHP = parseInt(DefaultStatBlock().data.attributes.hp.max);
     return {
       statBlock: DefaultStatBlock(),
-      currentHP: DefaultStatBlock().maxHP,
+      currentHP: currentHP,
     };
   },
   getInitiativeResult(combatant) {
-    return combatant.character.statBlock.initiativeModifier.toString();
+    return combatant.character.statBlock.data.attributes.init.bonus.toString();
   },
   initializeCharacter(statBlock) {
+    const currentHP = parseInt(statBlock.data.attributes.hp.max);
     return {
       statBlock,
-      currentHP: statBlock.maxHP,
+      currentHP: currentHP,
     };
   },
   renderFullView(combatant) {
@@ -102,7 +98,9 @@ export const pf2: RulesPlugin<Pf2Character, Pf2StatBlock> = {
   renderInitiativeRow(combatant) {
     const { character, initiativeResult } = combatant;
     const { statBlock, currentHP } = character;
-    const { name, maxHP } = statBlock;
+    const name = statBlock.name;
+    const maxHP = parseInt(statBlock.data.attributes.hp.max);
+
     return (
       <div className="flex flex-row gap-2 py-2">
         <div className="font-bold text-right w-6">{initiativeResult}</div>
