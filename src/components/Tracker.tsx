@@ -21,8 +21,6 @@ export function Tracker<TCharacter, TStatBlock>(
   const { t } = useTranslation("common");
 
   const state = useCombatStore((state) => state.combatState);
-  const nextTurn = useCombatStore((state) => state.nextTurn);
-  const { undo } = useCombatStore.temporal.getState();
   const [selectedCombatantId, setSelectedCombatantId] = useState<string | null>(
     null
   );
