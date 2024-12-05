@@ -115,9 +115,6 @@ export const pf2: RulesPlugin<Pf2Character, Pf2StatBlock> = {
 
 const ApplyDamagePrompt = (props: PromptComponentProps<Pf2Character>) => {
   const inputRef = useRef<HTMLInputElement>(null);
-  useEffect(() => {
-    inputRef.current?.focus();
-  });
 
   const onSubmit = useCallback(() => {
     const damageAmount = inputRef.current?.value;
@@ -130,7 +127,7 @@ const ApplyDamagePrompt = (props: PromptComponentProps<Pf2Character>) => {
 
   return (
     <div className="flex flex-row items-center gap-2">
-      <TextInput itemRef={inputRef} label="Apply Damage" onEnter={onSubmit} />
+      <TextInput itemRef={inputRef} label="Apply Damage" onEnter={onSubmit} autoFocus />
       <Button onClick={onSubmit}>Submit</Button>
     </div>
   );

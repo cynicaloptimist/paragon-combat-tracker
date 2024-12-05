@@ -125,10 +125,7 @@ export const dnd5e: RulesPlugin<DnD5eCharacter, DnD5eStatBlock> = {
 
 const ApplyDamagePrompt = (props: PromptComponentProps<DnD5eCharacter>) => {
   const inputRef = useRef<HTMLInputElement>(null);
-  useEffect(() => {
-    inputRef.current?.focus();
-  });
-
+  
   const onSubmit = useCallback(() => {
     const damageAmount = inputRef.current?.value;
     const newHp =
@@ -140,7 +137,7 @@ const ApplyDamagePrompt = (props: PromptComponentProps<DnD5eCharacter>) => {
 
   return (
     <div className="flex flex-row items-center gap-2">
-      <TextInput itemRef={inputRef} label="Apply Damage" onEnter={onSubmit} />
+      <TextInput itemRef={inputRef} label="Apply Damage" onEnter={onSubmit} autoFocus />
       <Button onClick={onSubmit}>Submit</Button>
     </div>
   );

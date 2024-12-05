@@ -1,16 +1,24 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { generateId } from "~/state/generateId";
 
 export const TextInput = (props: {
   itemRef: React.RefObject<HTMLInputElement>;
   label: string;
   onEnter?: () => void;
+  autoFocus?: boolean;
 }) => {
   const onKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Enter") {
       props.onEnter?.();
     }
   };
+
+  const inputRef = props.itemRef || useRef<HTMLInputElement>(null);
+  useEffect(() => {
+    if (props.autoFocus) {
+      inputRef.current?.focus();
+    }
+  });
 
   const inputId = useRef(generateId());
 
@@ -21,7 +29,7 @@ export const TextInput = (props: {
         className="border-2 rounded-md p-1 border-primary-300 focus:outline-primary-600 w-16"
         id={inputId.current}
         autoFocus
-        ref={props.itemRef}
+        ref={inputRef}
         onKeyDown={onKeyDown}
       />
     </div>
