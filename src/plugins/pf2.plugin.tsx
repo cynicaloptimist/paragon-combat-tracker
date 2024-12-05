@@ -5,39 +5,28 @@ import { useCallback, useEffect, useRef } from "react";
 import { Button } from "~/components/Button";
 import { TextInput } from "~/components/TextInput";
 import { z } from "zod";
+import { obj } from "~/plugin-utils/ZodUtils";
 
 export type Pf2Character = {
   statBlock: Pf2StatBlock;
   currentHP: number;
 };
 
-const obj = (objectType: z.ZodRawShape) => {
-  return z.object(objectType).default({});
-};
+const abilitySchema = obj({
+  value: z.number().default(10),
+});
 
 const pf2StatBlockSchema = obj({
   _id: z.string().default(""),
   name: z.string().default("Unnamed Statblock"),
   data: obj({
     abilities: obj({
-      cha: obj({
-        value: z.number().default(10),
-      }),
-      con: obj({
-        value: z.number().default(10),
-      }),
-      dex: obj({
-        value: z.number().default(10),
-      }),
-      int: obj({
-        value: z.number().default(10),
-      }),
-      str: obj({
-        value: z.number().default(10),
-      }),
-      wis: obj({
-        value: z.number().default(10),
-      }),
+      cha: abilitySchema,
+      con: abilitySchema,
+      dex: abilitySchema,
+      int: abilitySchema,
+      str: abilitySchema,
+      wis: abilitySchema,
     }),
     attributes: obj({
       ac: obj({
